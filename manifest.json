@@ -1,0 +1,22 @@
+{
+    "manifest_version" : 2,
+
+    "name" : "In-page Highlighter",
+    "version" : "0.1",
+    "description" : "Instantly hightlight anything you select in current page",
+	
+    "content_scripts" : [{
+            "matches" : ["<all_urls>"],
+			"css" : ["style.css"],
+            "js" : ["j.js"]
+        }],
+    "permissions" : [
+        "http://*/*",
+        "https://*/*"
+    ],
+	"browser_action": {
+		"default_icon": "icon.png",
+		"default_popup": "popup.html"
+	},
+	"options_page": "options.html"
+}
