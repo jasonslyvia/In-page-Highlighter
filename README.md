@@ -3,6 +3,8 @@ In-page Highlighter
 
 Instantly highlight anything you select in current page, built for Google Chrome plug-in.
 
+[中文版说明](http://undefinedblog.com/2013/09/chrome-plugin-in-page-highlighter/)
+
 ##Usage
 
 **Before selection**
