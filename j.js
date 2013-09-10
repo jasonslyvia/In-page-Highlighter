@@ -23,11 +23,69 @@ THE SOFTWARE.
 
 */
 
+//get options first
+var selectionLengthLimit;
+var hotKey;
+var shouldAutoCopy;
+var hotKeyFlag = false;
+var keyCode = null;
+
+chrome.extension.sendRequest({method: "getOptions"}, function(response) {
+	if(typeof response === "object"){
+		var options = response.options;
+		selectionLengthLimit = options["selectionLengthLimit"];
+		hotKey = options["hotKey"];
+		shouldAutoCopy = options["shouldAutoCopy"];
+		
+		if(hotKey && hotKey != "none"){
+			switch(hotKey){
+				case "ctrl":{
+					keyCode = 17;
+				}
+				break;
+				case "alt":{
+					keyCode = 18;
+				}
+				break;
+				case "shift":{
+					keyCode = 16;
+				}
+				break;
+				default:{
+				}
+				break;
+			};
+		}
+
+		document.addEventListener("keydown", function(e){
+			if(e.keyCode == keyCode){
+				hotKeyFlag = true;
+			}
+		});
+		document.addEventListener("keyup", function(){
+			hotKeyFlag = false;
+		});
+
+	}
+});
+
+
 //if there is a selection
 document.addEventListener('mouseup',function(event){
+	if(hotKey && hotKey != "none" && !hotKeyFlag)
+		return false;
+
     var sel = window.getSelection().toString().trim();
+	if(selectionLengthLimit && sel.length < selectionLengthLimit)
+		return false;
+		
     if(sel.length){
 		highlight(sel);
+		if(shouldAutoCopy == "true"){
+			chrome.extension.sendRequest({method: "copy", msg: sel}, function(response) {
+				console.log("copied");
+			});
+		}
     }
 });
 

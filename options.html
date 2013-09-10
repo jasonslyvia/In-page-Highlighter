@@ -4,14 +4,49 @@
 <meta charset="utf-8" />
 <title>In-page Highlighter Options</title>
 <style type="text/css">
-body{height:100%; overflow: auto;background-color: #cfc;}
-.container{margin: 0 auto; width:60%; height: 40%;}
+body{height:100%; background-color: #eee;}
+.container{position:absolute; width:600px; min-height: 300px; left:50%; top:50%; margin-top:-200px; margin-left:-300px;border-radius:20px; border:2px #333 solid; background-color:#fff; box-shadow: 0 0 25px; transition: .3s;}
+.container h1{text-align:center;}
+input, select, label{vertical-align:baseline;}
+.options {width: 90%;margin: 0 auto;padding: 0;margin-top:40px;}
+.options li{list-style:none; margin-bottom: 10px; padding-bottom:10px; border-bottom:1px #ccc dashed;}
+.options li.action{border:none; text-align:center;}
+#submit, #default{border:1px #ccc solid; padding:10px 15px;cursor:pointer;transition: .5s;color:#fff; border-radius:5px; text-shadow:1px 1px #000;}
+#submit{background-color: #0672C2; margin-right:20px;}
+#default{background-color: silver;}
+#submit:hover{background-color: #027CC9;}
+#default:hover{background-color: #999}
+#selectionLengthLimit{width:50px;}
+#message{display:none;}
 </style>
+<script type="text/javascript" src="options.js"></script>
 </head>
 <body>
 <div class="container">
-	<h1>In-page Highlighter Options</h1>
-	
+	<h1 id="title">In-page Highlighter Options</h1>
+	<ul class="options">
+		<li id="selectionLimitLi">
+			<input type="number" id="selectionLengthLimit" value="" maxlength="20" />
+			<label for="selectionLengthLimit" id="selectionLengthLimitLabel"></label>
+		</li>
+		<li id="hotKeyLi">
+			<select id="hotKey">
+				<option value="none">None</option>
+				<option value="ctrl">Ctrl</option>
+				<option value="alt">Alt</option>
+				<option value="shift">Shift</option>
+			</select>
+			<label for="hotKey" id="hotKeyLabel"></label>
+		</li>
+		<li>
+			<input type="checkbox" id="shouldAutoCopy" />
+			<label for="shouldAutoCopy" id="shouldAutoCopyLabel"></label>
+		</li>
+		<li class="action">
+			<button id="submit"></button><button id="default"></button>
+		</li>
+		<li id="message"></li>
+	</ul>
 </div>
 </body>
 </html>
