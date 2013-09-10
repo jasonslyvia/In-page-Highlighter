@@ -1,7 +1,7 @@
 In-page Highlighter
 ===================
 
-Instantly hightlight anything you select in current page, built for Google Chrome plug-in.
+Instantly highlight anything you select in current page, built for Google Chrome plug-in.
 
 ##Usage
 
