@@ -1,0 +1,34 @@
+{
+	"optionTitle": {
+		"message": "In-page Highlighter Options",
+		"description": "option page title"
+	},
+	"selectionLimit": {
+		"message": " and more character(s) should be selected.",
+		"description": "character count limit option label"
+	},
+	"hotKey": {
+		"message": " key should be pressed.",
+		"description": "hot key option label"
+	},
+	"autoCopy": {
+		"message": "Auto copy the selected character(s) to clipboard.",
+		"description": "Auto copy option label"
+	},
+	"OKButton": {
+		"message": "OK",
+		"description": "Text of OK button"
+	},
+	"defaultButton": {
+		"message": "Default",
+		"description": "Text of Default button"
+	},
+	"successMessage": {
+		"message": "Options are successfully changed! Refresh the page to see the changes.",
+		"description": "Message shown when opitons are changed"
+	},
+	"warningMessage": {
+		"message": "Are you sure to make options default?",
+		"description": "Message shown when to make options default"
+	}
+}

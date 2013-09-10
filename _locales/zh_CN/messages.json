@@ -1,0 +1,34 @@
+{
+	"optionTitle": {
+		"message": "In-page Highlighter 选项",
+		"description": "option page title"
+	},
+	"selectionLimit": {
+		"message": " 及更多个字符被选中后才激活高亮功能",
+		"description": "character count limit option label"
+	},
+	"hotKey": {
+		"message": " 键被按下后才激活高亮功能",
+		"description": "hot key option label"
+	},
+	"autoCopy": {
+		"message": "自动将选中的文本添加到粘贴板",
+		"description": "Auto copy option label"
+	},
+	"OKButton": {
+		"message": "确认",
+		"description": "Text of OK button"
+	},
+	"defaultButton": {
+		"message": "恢复默认",
+		"description": "Text of Default button"
+	},
+	"successMessage": {
+		"message": "选项修改成功！请刷新页面查看效果。",
+		"description": "Message shown when opitons are changed"
+	},
+	"warningMessage": {
+		"message": "确认要恢复到默认配置吗？",
+		"description": "Message shown when to make options default"
+	}
+}
