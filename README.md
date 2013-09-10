@@ -37,8 +37,8 @@ However, if you want to migrate it to Internet Explorer or some other browsers t
 ```
 
 ##TODO
- - [ ] Option pages
- - [ ] Internationalization 
+ - [x] Option pages
+ - [x] Internationalization 
  - [ ] Bugs fix
 
 ##License
