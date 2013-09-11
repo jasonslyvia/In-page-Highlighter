@@ -36,7 +36,7 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response) {
 		selectionLengthLimit = options["selectionLengthLimit"];
 		hotKey = options["hotKey"];
 		shouldAutoCopy = options["shouldAutoCopy"];
-		
+
 		if(hotKey && hotKey != "none"){
 			switch(hotKey){
 				case "ctrl":{
@@ -78,7 +78,7 @@ document.addEventListener('mouseup',function(event){
     var sel = window.getSelection().toString().trim();
 	if(selectionLengthLimit && sel.length < selectionLengthLimit)
 		return false;
-		
+
     if(sel.length){
 		highlight(sel);
 		if(shouldAutoCopy == "true"){
@@ -90,7 +90,7 @@ document.addEventListener('mouseup',function(event){
 });
 
 //if there is highlighted word, make it normal
-document.addEventListener('click', function(e){	
+document.addEventListener('click', function(e){
 	var highlight = document.querySelectorAll("span.highlight");
 	if(!!highlight){
 		for(var i=0; i<highlight.length; i++){
@@ -108,7 +108,7 @@ function highlight(term){
 	if(!term){
 		return false;
 	}
-	
+
 	//use treeWalker to find all text nodes that match selection
 	//supported by Chrome(1.0+)
 	//see more at https://developer.mozilla.org/en-US/docs/Web/API/TreeWalker
@@ -125,11 +125,12 @@ function highlight(term){
 			matches.push(node);
 		}
 	}
-	
+
 	//deal with those matched text nodes
 	for(var i=0; i<matches.length; i++){
 		node = matches[i];
-		//empty the parent node
+		//empty the parent node   BAD IDEA!!!! fixed it
+		//keep the reference to current node
 		var parent = node.parentNode;
 		if(!parent){
 			parent = node;
@@ -139,12 +140,7 @@ function highlight(term){
 		else if(parent.className == "highlight"){
 			continue;
 		}
-		else{
-			while(parent && parent.firstChild){
-				parent.removeChild(parent.firstChild);
-			}
-		}
-		
+
 		//find every occurance using split function
 		var parts = node.data.split(new RegExp('('+term+')'));
 		for(var j=0; j<parts.length; j++){
@@ -158,14 +154,17 @@ function highlight(term){
 				var newNode = document.createElement("span");
 				newNode.className = "highlight";
 				newNode.innerText = part;
-				parent.appendChild(newNode);
+				parent.insertBefore(newNode, node);
 			}
 			//create new text node to place remaining text
 			else{
 				var newTextNode = document.createTextNode(part);
-				parent.appendChild(newTextNode);
+				parent.insertBefore(newTextNode, node);
 			}
 		}
-		
+
+		//remove the original node finally
+		parent.removeChild(node);
+
 	}
 }
