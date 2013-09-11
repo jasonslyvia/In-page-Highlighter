@@ -1,4 +1,5 @@
 .highlight{
+	display: inline !important;
 	background: #F64 !important;
 	padding: 0 5px !important;
 	color: #FFF !important;
