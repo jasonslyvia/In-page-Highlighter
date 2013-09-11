@@ -1,4 +1,8 @@
 {
+	"description": {
+		"message": "Instantly highlight anything you select in current page",
+		"description": "description of the plugin"
+	},
 	"optionTitle": {
 		"message": "In-page Highlighter Options",
 		"description": "option page title"
