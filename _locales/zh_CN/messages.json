@@ -1,4 +1,8 @@
 {
+	"description": {
+		"message": "自动高亮你在当前页面选中的所有相同的内容",
+		"description": "description of the plugin"
+	},
 	"optionTitle": {
 		"message": "In-page Highlighter 选项",
 		"description": "option page title"
