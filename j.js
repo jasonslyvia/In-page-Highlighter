@@ -91,7 +91,7 @@ document.addEventListener('mouseup',function(event){
 
 //if there is highlighted word, make it normal
 document.addEventListener('click', function(e){
-	var highlight = document.querySelectorAll("span.highlight");
+	var highlight = document.querySelectorAll("span.pp-highlight");
 	if(!!highlight){
 		for(var i=0; i<highlight.length; i++){
 			var h = highlight[i];
@@ -137,7 +137,7 @@ function highlight(term){
 			parent.nodeValue = '';
 		}
 		//prevent duplicate highlighting
-		else if(parent.className == "highlight"){
+		else if(parent.className == "pp-highlight"){
 			continue;
 		}
 
