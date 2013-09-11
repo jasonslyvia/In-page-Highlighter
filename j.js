@@ -152,7 +152,7 @@ function highlight(term){
 			//create new element node to wrap selection
 			else if(part == term){
 				var newNode = document.createElement("span");
-				newNode.className = "highlight";
+				newNode.className = "pp-highlight";
 				newNode.innerText = part;
 				parent.insertBefore(newNode, node);
 			}
