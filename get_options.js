@@ -1,6 +1,6 @@
 //for the reason content_script can't read options stored in local storage,
 //using Chrome API to retreive these options
-//addtionally deal with the clipboard problem
+
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     if (request.method == "getOptions"){
 		sendResponse({options: localStorage});
@@ -19,3 +19,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	}
 });
 
+chrome.runtime.onInstalled.addListener(function(details){
+	if (details.reason == "install") {
+		chrome.tabs.create({url: "options.html"});
+	}
+});

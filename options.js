@@ -39,12 +39,12 @@ document.addEventListener("DOMContentLoaded", function(){
 //read options from local storage and fill in the html form
 function getOptions(){
 	if(!localStorage["selectionLengthLimit"]){
-		localStorage["selectionLengthLimit"] = 1;
+		localStorage["selectionLengthLimit"] = 3;
 	}
 	document.getElementById("selectionLengthLimit").value = localStorage["selectionLengthLimit"];
 	
 	if(!localStorage["hotKey"]){
-		localStorage["hotKey"] = "none";
+		localStorage["hotKey"] = "alt";
 	}
 	document.getElementById("hotKey").value = localStorage["hotKey"];
 	
