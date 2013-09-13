@@ -1,0 +1,9 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/jason/Documents/My Code/Chrome Extension/In-page-Highlighter",
+            "file_exclude_patterns": ["*.png", "*sublime*", "LICENSE"]
+		}
+	]
+}
