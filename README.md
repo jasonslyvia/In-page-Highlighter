@@ -40,6 +40,7 @@ However, if you want to migrate it to Internet Explorer or some other browsers t
  - [x] Option pages
  - [x] Internationalization 
  - [ ] Bugs fix
+ - [ ] Add mini map feature
 
 ##License
 
