@@ -86,6 +86,7 @@ document.addEventListener('mouseup',function(event){
 				console.log("copied");
 			});
 		}
+
     }
 });
 
