@@ -17,6 +17,12 @@ Instantly highlight anything you select in current page, built for Google Chrome
 
 ##Deployment
 
+**Regular User**
+
+You can get In-page Highlighter in [Chrome Web Store](https://chrome.google.com/webstore/detail/in-page-highlighter/jieapbldippnhiccagafbdbhipaaanei)
+
+**Developer**
+
 1. Download the project as a .zip file
 2. Extract everything to a preferred directory
 3. Open Google Chrome Settings, change to **Extensions** panel

@@ -37,7 +37,12 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response) {
 		hotKey = options["hotKey"];
 		shouldAutoCopy = options["shouldAutoCopy"];
 
-		if(hotKey && hotKey != "none"){
+		if(hotKey != "none"){
+			//make default hotkey to alt
+			if (!hotKey) {
+				hotKey = "alt";
+			}
+			
 			switch(hotKey){
 				case "ctrl":{
 					keyCode = 17;
@@ -54,7 +59,7 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response) {
 				default:{
 				}
 				break;
-			};
+			}
 		}
 
 		document.addEventListener("keydown", function(e){
@@ -65,7 +70,6 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response) {
 		document.addEventListener("keyup", function(){
 			hotKeyFlag = false;
 		});
-
 	}
 });
 
@@ -144,6 +148,7 @@ function highlight(term){
 
 		//find every occurance using split function
 		var parts = node.data.split(new RegExp('('+term+')'));
+		var newNodes = [];
 		for(var j=0; j<parts.length; j++){
 			var part = parts[j];
 			//continue if it's empty
@@ -155,13 +160,20 @@ function highlight(term){
 				var newNode = document.createElement("span");
 				newNode.className = "pp-highlight";
 				newNode.innerText = part;
-				parent.insertBefore(newNode, node);
+				newNodes.push(newNode);
+				//parent.insertBefore(newNode, node);
 			}
 			//create new text node to place remaining text
 			else{
 				var newTextNode = document.createTextNode(part);
-				parent.insertBefore(newTextNode, node);
+				newNodes.push(newTextNode);
+				//parent.insertBefore(newTextNode, node);
 			}
+		}
+
+		var insertNode;
+		while(insertNode = newNodes.shift()){
+			parent.insertBefore(insertNode, node);
 		}
 
 		//remove the original node finally
