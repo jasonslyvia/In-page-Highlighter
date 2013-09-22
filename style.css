@@ -6,3 +6,20 @@
 	border-radius: 3px 3px;
 	box-shadow: 1px 1px #CCC;
 }
+
+.pp-map{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 10px;
+    -webkit-blur: 20px;
+}
+
+.pp-map-span{
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    display: block;
+    background-color: #f64;
+}

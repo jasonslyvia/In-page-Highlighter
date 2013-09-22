@@ -42,7 +42,7 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response) {
 			if (!hotKey) {
 				hotKey = "alt";
 			}
-			
+
 			switch(hotKey){
 				case "ctrl":{
 					keyCode = 17;
@@ -85,6 +85,7 @@ document.addEventListener('mouseup',function(event){
 
     if(sel.length){
 		highlight(sel);
+		buildMap();
 		if(shouldAutoCopy == "true"){
 			chrome.extension.sendRequest({method: "copy", msg: sel}, function(response) {
 				console.log("copied");
@@ -98,14 +99,20 @@ document.addEventListener('mouseup',function(event){
 document.addEventListener('click', function(e){
 	var highlight = document.querySelectorAll("span.pp-highlight");
 	if(!!highlight){
-		for(var i=0; i<highlight.length; i++){
-			var h = highlight[i];
+		Array.prototype.forEach.call(highlight, function(h){
+
 			var parent = h.parentNode;
 			var textNode = document.createTextNode(h.innerText);
 			parent.replaceChild(textNode.cloneNode(false), h);
 			//call normalize to combine separated text nodes
 			parent.normalize();
-		}
+
+		});
+	}
+
+	var map = document.getElementsByClassName("pp-map");
+	if (map.length > 0) {
+		map[0].parentNode.removeChild(map[0]);
 	}
 });
 
@@ -180,4 +187,41 @@ function highlight(term){
 		parent.removeChild(node);
 
 	}
+}
+
+
+function buildMap(){
+
+	//calculate offsetTop of every highligh span and store into an arry
+	var highlights = document.getElementsByClassName("pp-highlight");
+	if (!highlights) {
+		return false;
+	}
+
+	highlights = Array.prototype.slice.call(highlights, 0);
+	var highlightArray = [];
+	highlights.forEach(function(element, index, array){
+		var offsetTop,
+			el = element;
+
+		offsetTop = el.offsetTop;
+		while(el = el.offsetParent){
+			offsetTop += el.offsetTop;
+		}
+
+		highlightArray.push(offsetTop);
+	});
+
+	//build a minimap
+	var docHeight = document.height;
+	var map = document.createElement("div");
+	map.className = "pp-map";
+	for (var i = highlightArray.length - 1; i >= 0; i--) {
+		var span = document.createElement("span");
+		span.className = "pp-map-span";
+		span.style.top = (parseFloat(highlightArray[i] / docHeight, 10) * 100) + '%';
+		map.appendChild(span);
+	}
+
+	document.body.appendChild(map);
 }
