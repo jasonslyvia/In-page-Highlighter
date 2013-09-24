@@ -28,6 +28,7 @@ var selectionLengthLimit;
 var hotKey;
 var shouldAutoCopy;
 var hotKeyFlag = false;
+var enableMiniMap = false;
 var keyCode = null;
 
 chrome.extension.sendRequest({method: "getOptions"}, function(response) {
@@ -36,13 +37,13 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response) {
 		selectionLengthLimit = options["selectionLengthLimit"];
 		hotKey = options["hotKey"];
 		shouldAutoCopy = options["shouldAutoCopy"];
+		enableMiniMap = options["enableMiniMap"];
 
 		if(hotKey != "none"){
 			//make default hotkey to alt
 			if (!hotKey) {
 				hotKey = "alt";
 			}
-
 			switch(hotKey){
 				case "ctrl":{
 					keyCode = 17;
@@ -76,19 +77,22 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response) {
 
 //if there is a selection
 document.addEventListener('mouseup',function(event){
-	if(hotKey && hotKey != "none" && !hotKeyFlag)
+	if(hotKey && hotKey != "none" && !hotKeyFlag){
 		return false;
+	}
 
     var sel = window.getSelection().toString().trim();
-	if(selectionLengthLimit && sel.length < selectionLengthLimit)
+	if(selectionLengthLimit && sel.length < selectionLengthLimit){
 		return false;
+	}
 
     if(sel.length){
 		highlight(sel);
-		buildMap();
+		if (enableMiniMap == "true") {
+			buildMap();
+		}
 		if(shouldAutoCopy == "true"){
 			chrome.extension.sendRequest({method: "copy", msg: sel}, function(response) {
-				console.log("copied");
 			});
 		}
 
@@ -193,7 +197,7 @@ function highlight(term){
 function buildMap(){
 
 	//calculate offsetTop of every highligh span and store into an arry
-	var highlights = document.getElementsByClassName("pp-highlight");
+	var highlights = document.querySelectorAll(".pp-highlight");
 	if (!highlights) {
 		return false;
 	}

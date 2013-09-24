@@ -19,6 +19,10 @@
 		"message": "Auto copy the selected character(s) to clipboard.",
 		"description": "Auto copy option label"
 	},
+	"miniMap": {
+		"message": "Enable mini map",
+		"description": "enableMiniMap label"
+	},
 	"OKButton": {
 		"message": "OK",
 		"description": "Text of OK button"

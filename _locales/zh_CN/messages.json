@@ -19,6 +19,10 @@
 		"message": "自动将选中的文本添加到粘贴板",
 		"description": "Auto copy option label"
 	},
+	"miniMap": {
+		"message": "启用搜索结果分布图功能",
+		"description": "enableMiniMap label"
+	},
 	"OKButton": {
 		"message": "确认",
 		"description": "Text of OK button"
