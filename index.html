@@ -9,6 +9,33 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>In-page-highlighter Demo</title>
+    <style type="text/css">
+      .pp-highlight{
+	display: inline !important;
+	background: #F64 !important;
+	padding: 0 5px !important;
+	color: #FFF !important;
+	border-radius: 3px 3px;
+	box-shadow: 1px 1px #CCC;
+}
+
+.pp-map{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 10px;
+    -webkit-blur: 20px;
+}
+
+.pp-map-span{
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    display: block;
+    background-color: #f64;
+}
+    </style>
   </head>
 
   <body>
@@ -32,7 +59,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Try to select a few words.</h3>
 
 <p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
@@ -73,7 +100,161 @@ $ git checkout gh-pages
       </footer>
     </div>
 
+    <script type="text/javascript">
     
+var selectionLengthLimit = 3;
+var hotKey;
+var hotKeyFlag = false;
+var enableMiniMap = true;
+var keyCode = null;
+      
+//if there is a selection
+document.addEventListener('mouseup',function(event){
+
+    var sel = window.getSelection().toString().trim();
+	if(selectionLengthLimit && sel.length < selectionLengthLimit){
+		return false;
+	}
+
+    if(sel.length){
+  		highlight(sel);
+  		if (enableMiniMap == "true") {
+  			buildMap();
+  		}
+    }
+});
+
+//if there is highlighted word, make it normal
+document.addEventListener('click', function(e){
+	var highlight = document.querySelectorAll("span.pp-highlight");
+	if(!!highlight){
+		Array.prototype.forEach.call(highlight, function(h){
+
+			var parent = h.parentNode;
+			var textNode = document.createTextNode(h.innerText);
+			parent.replaceChild(textNode.cloneNode(false), h);
+			//call normalize to combine separated text nodes
+			parent.normalize();
+
+		});
+	}
+
+	var map = document.getElementsByClassName("pp-map");
+	if (map.length > 0) {
+		map[0].parentNode.removeChild(map[0]);
+	}
+});
+
+function highlight(term){
+	if(!term){
+		return false;
+	}
+
+	//use treeWalker to find all text nodes that match selection
+	//supported by Chrome(1.0+)
+	//see more at https://developer.mozilla.org/en-US/docs/Web/API/TreeWalker
+	var treeWalker = document.createTreeWalker(
+		document.body,
+		NodeFilter.SHOW_TEXT,
+		null,
+		false
+		);
+	var node = null;
+	var matches = [];
+	while(node = treeWalker.nextNode()){
+		if(node.nodeType === 3 && node.data.indexOf(term) !== -1){
+			matches.push(node);
+		}
+	}
+
+	//deal with those matched text nodes
+	for(var i=0; i<matches.length; i++){
+		node = matches[i];
+		//empty the parent node   BAD IDEA!!!! fixed it
+		//keep the reference to current node
+		var parent = node.parentNode;
+		if(!parent){
+			parent = node;
+			parent.nodeValue = '';
+		}
+		//prevent duplicate highlighting
+		else if(parent.className == "pp-highlight"){
+			continue;
+		}
+
+		//find every occurance using split function
+		var parts = node.data.split(new RegExp('('+term+')'));
+		var newNodes = [];
+		for(var j=0; j<parts.length; j++){
+			var part = parts[j];
+			//continue if it's empty
+			if(!part){
+				continue;
+			}
+			//create new element node to wrap selection
+			else if(part == term){
+				var newNode = document.createElement("span");
+				newNode.className = "pp-highlight";
+				newNode.innerText = part;
+				newNodes.push(newNode);
+				//parent.insertBefore(newNode, node);
+			}
+			//create new text node to place remaining text
+			else{
+				var newTextNode = document.createTextNode(part);
+				newNodes.push(newTextNode);
+				//parent.insertBefore(newTextNode, node);
+			}
+		}
+
+		var insertNode;
+		while(insertNode = newNodes.shift()){
+			parent.insertBefore(insertNode, node);
+		}
+
+		//remove the original node finally
+		parent.removeChild(node);
+
+	}
+}
+
+
+function buildMap(){
+
+	//calculate offsetTop of every highligh span and store into an arry
+	var highlights = document.querySelectorAll(".pp-highlight");
+	if (!highlights) {
+		return false;
+	}
+
+	highlights = Array.prototype.slice.call(highlights, 0);
+	var highlightArray = [];
+	highlights.forEach(function(element, index, array){
+		var offsetTop,
+			el = element;
+
+		offsetTop = el.offsetTop;
+		while(el = el.offsetParent){
+			offsetTop += el.offsetTop;
+		}
+
+		highlightArray.push(offsetTop);
+	});
+
+	//build a minimap
+	var docHeight = document.height;
+	var map = document.createElement("div");
+	map.className = "pp-map";
+	for (var i = highlightArray.length - 1; i >= 0; i--) {
+		var span = document.createElement("span");
+		span.className = "pp-map-span";
+		span.style.top = (parseFloat(highlightArray[i] / docHeight, 10) * 100) + '%';
+		map.appendChild(span);
+	}
+
+	document.body.appendChild(map);
+}
+    </script>
 
   </body>
 </html>
