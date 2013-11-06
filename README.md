@@ -5,6 +5,8 @@ Instantly highlight anything you select in current page, built for Google Chrome
 
 [中文版说明](http://undefinedblog.com/2013/09/chrome-plugin-in-page-highlighter/)
 
+[DEMO](http://jasonslyvia.github.io/In-page-Highlighter/)
+
 ##Usage
 
 **Before selection**
@@ -45,8 +47,10 @@ However, if you want to migrate it to Internet Explorer or some other browsers t
 ##TODO
  - [x] Option pages
  - [x] Internationalization 
- - [ ] Bugs fix
- - [ ] Add mini map feature
+ - [x] Bugs fix
+ - [x] Add mini map feature
+ - [ ] Refine mini map
+ - [ ] Performance enhancement
 
 ##License
 
