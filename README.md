@@ -49,8 +49,9 @@ However, if you want to migrate it to Internet Explorer or some other browsers t
  - [x] Internationalization 
  - [x] Bugs fix
  - [x] Add mini map feature
- - [ ] Refine mini map
- - [ ] Performance enhancement
+ - [x] Refine mini map
+ - [x] Performance enhancement
+ - [ ] Add case insensitive option
 
 ##License
 
