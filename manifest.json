@@ -3,7 +3,7 @@
 	"default_locale": "en",
 
     "name" : "In-page Highlighter",
-    "version" : "0.4",
+    "version" : "0.5",
     "description" : "__MSG_description__",
 
     "content_scripts" : [{
