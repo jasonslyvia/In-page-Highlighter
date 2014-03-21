@@ -38,5 +38,9 @@
 	"warningMessage": {
 		"message": "确认要恢复到默认配置吗？",
 		"description": "Message shown when to make options default"
+	},
+	"matchesTooManyWarnMessage": {
+		"message": "有超过100处匹配需要渲染，可能会导致浏览器无响应，是否继续？",
+		"description": ""
 	}
 }

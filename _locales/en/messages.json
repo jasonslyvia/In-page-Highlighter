@@ -38,5 +38,9 @@
 	"warningMessage": {
 		"message": "Are you sure to make options default?",
 		"description": "Message shown when to make options default"
+	},
+	"matchesTooManyWarnMessage": {
+		"message": "There are more than 100 matches that might freeze your browser while rendering, proceed?",
+		"description": ""
 	}
 }
