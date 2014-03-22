@@ -46,14 +46,14 @@ However, if you want to migrate it to Internet Explorer or some other browsers t
 
 ##TODO
  - [x] Option pages
- - [x] Internationalization 
+ - [x] Internationalization
  - [x] Bugs fix
  - [x] Add mini map feature
  - [x] Refine mini map
  - [x] Performance enhancement
- - [ ] Add case insensitive option
+ - [x] Add case insensitive option
 
 ##License
 
 This project is under MIT License.
- 
+
