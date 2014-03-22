@@ -41,8 +41,9 @@ var InPageHighlighter = {
         var options = response.options;
         self.selectionLengthLimit = options["selectionLengthLimit"];
         self.hotKey = options["hotKey"];
-        self.shouldAutoCopy = options["shouldAutoCopy"];
-        self.enableMiniMap = options["enableMiniMap"];
+        self.shouldAutoCopy = JSON.parse(options["shouldAutoCopy"]);
+        self.enableMiniMap = JSON.parse(options["enableMiniMap"]);
+        self.caseSensitive = JSON.parse(options["caseSensitive"]);
 
         if(self.hotKey != "none"){
           //make default hotkey to alt
@@ -112,12 +113,14 @@ var InPageHighlighter = {
         //if there is valid selection, highlight them
         if(sel.length){
           self._highlight(sel);
-          if (self.enableMiniMap == "true") {
+          if (self.enableMiniMap) {
             self._buildMap();
           }
-          if(self.shouldAutoCopy == "true"){
+          if(self.shouldAutoCopy){
             self._copyToClipboard(sel);
           }
+
+          self._reSelectOriginalSelection();
         }
       }
       else{
@@ -145,6 +148,7 @@ var InPageHighlighter = {
       return false;
     }
 
+    var self = this;
     //use treeWalker to find all text nodes that match selection
     //supported by Chrome(1.0+)
     //see more at https://developer.mozilla.org/en-US/docs/Web/API/TreeWalker
@@ -157,7 +161,8 @@ var InPageHighlighter = {
     var node = null;
     var matches = [];
     while(node = treeWalker.nextNode()){
-      if(node.nodeType === 3 && node.data.indexOf(term) !== -1){
+      var nodeValue = node.nodeValue;
+      if(node.nodeType === 3 && nodeValue.toLowerCase().indexOf(term.toLowerCase()) !== -1){
         matches.push(node);
       }
     }
@@ -182,7 +187,13 @@ var InPageHighlighter = {
       }
 
       //find every occurance using split function
-      var parts = node.data.split(new RegExp('('+term+')'));
+      var parts;
+      if (self.caseSensitive) {
+        parts = node.data.split(new RegExp('('+term+')'));
+      }
+      else{
+        parts = node.data.split(new RegExp('('+term+')', 'i'));
+      }
       var newNodes = [];
       for(var j=0; j<parts.length; j++){
         var part = parts[j];
@@ -191,7 +202,8 @@ var InPageHighlighter = {
           continue;
         }
         //create new element node to wrap selection
-        else if(part == term){
+        else if((!self.caseSensitive && (part.toLowerCase() == term.toLowerCase())) ||
+                self.caseSensitive && (part == term)) {
           var newNode = document.createElement("span");
           newNode.className = "pp-highlight";
           newNode.innerText = part;
@@ -294,6 +306,23 @@ var InPageHighlighter = {
     event.target.dispatchEvent(evt);
 
     return true;
+  },
+
+  _reSelectOriginalSelection: function(){
+    //choose the first highlight to be selected,
+    //make it behave more fluently when user press
+    //ctrl + c to copy it
+    var highlight;
+    if (highlight = document.getElementsByClassName("pp-highlight")[0]) {
+      var highlightNode = highlight.lastChild;
+      var range = document.createRange();
+      range.setStart(highlightNode, 0);
+      range.setEnd(highlightNode, highlightNode.nodeValue.length);
+
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
   }
 };
 

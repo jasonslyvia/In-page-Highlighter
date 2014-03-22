@@ -16,6 +16,9 @@ document.addEventListener("DOMContentLoaded", function(){
 	var miniMap = chrome.i18n.getMessage("miniMap");
 	document.getElementById("enableMiniMapLabel").innerText = miniMap;
 
+	var caseSensitive = chrome.i18n.getMessage("caseSensitive");
+	document.getElementById("caseSensitiveLabel").innerText = caseSensitive;
+
 	var OKButton = chrome.i18n.getMessage("OKButton");
 	document.getElementById("submit").innerText = OKButton;
 
@@ -35,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function(){
 			localStorage.removeItem("hotKey");
 			localStorage.removeItem("shouldAutoCopy");
 			localStorage.removeItem("enableMiniMap");
+			localStorage.removeItem("caseSensitive");
 			location.reload();
 		}
 	});
@@ -55,9 +59,14 @@ function getOptions(){
 	if(!localStorage["shouldAutoCopy"]){
 		localStorage["shouldAutoCopy"] = "true";
 	}
+
+	if (!localStorage["caseSensitive"]) {
+		localStorage["caseSensitive"] = "false";
+	}
 	//fix for local storage doesn't recognize boolean type
 	document.getElementById("shouldAutoCopy").checked = JSON.parse(localStorage["shouldAutoCopy"]);
 	document.getElementById("enableMiniMap").checked = JSON.parse(localStorage["enableMiniMap"]);
+	document.getElementById("caseSensitive").checked = JSON.parse(localStorage["caseSensitive"]);
 }
 
 //read options from html form and store in local storage
@@ -77,7 +86,7 @@ function setOptions(){
 		localStorage["shouldAutoCopy"] = "true";
 	}
 	else{
-		localStorage["shouldAutoCopy"] = 'false';
+		localStorage["shouldAutoCopy"] = "false";
 	}
 
 	var enableMiniMap = document.getElementById("enableMiniMap").checked;
@@ -85,7 +94,15 @@ function setOptions(){
 		localStorage["enableMiniMap"] = "true";
 	}
 	else{
-		localStorage["enableMiniMap"] = 'false';
+		localStorage["enableMiniMap"] = "false";
+	}
+
+	var caseSensitive = document.getElementById("caseSensitive").checked;
+	if (caseSensitive) {
+		localStorage["caseSensitive"] = "true";
+	}
+	else{
+		localStorage["caseSensitive"] = "false";
 	}
 
 	var message = document.getElementById("message");

@@ -23,6 +23,10 @@
 		"message": "Enable mini map",
 		"description": "enableMiniMap label"
 	},
+	"caseSensitive": {
+		"message": "Highlight selection in exact case(case sensitive)",
+		"description": ""
+	},
 	"OKButton": {
 		"message": "OK",
 		"description": "Text of OK button"

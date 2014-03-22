@@ -23,6 +23,10 @@
 		"message": "启用搜索结果分布图功能",
 		"description": "enableMiniMap label"
 	},
+	"caseSensitive": {
+		"message": "高亮与所选内容大小写完全一致的内容（大小写敏感）",
+		"description": ""
+	},
 	"OKButton": {
 		"message": "确认",
 		"description": "Text of OK button"

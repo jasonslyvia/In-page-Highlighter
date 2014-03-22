@@ -11,7 +11,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		document.body.appendChild(text);
 		text.select();
 		document.execCommand("copy", false, null);
-		
+
 		sendResponse(null);
 	}
     else{
@@ -20,7 +20,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 });
 
 chrome.runtime.onInstalled.addListener(function(details){
-	if (details.reason == "install") {
+	if (details.reason == "install" || details.reason == "update") {
 		chrome.tabs.create({url: "options.html"});
 	}
 });
